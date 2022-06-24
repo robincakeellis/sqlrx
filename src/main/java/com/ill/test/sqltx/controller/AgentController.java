@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.ill.test.sqltx.repository.AgentRow;
 import com.ill.test.sqltx.service.AgentService;
 
+import reactor.core.publisher.Flux;
+
 @Controller
 public class AgentController {
 
@@ -19,10 +21,18 @@ public class AgentController {
 
     @GetMapping("/agents")
     public ResponseEntity<String> getAll() {
-        final List<AgentRow> agents = service.getAll();
+        final List<AgentRow> agents = service.getAll().collectList().block();
+
         final StringBuilder sb = new StringBuilder();
-        agents.forEach(a -> sb.append(a.getAgentId()).append('\n'));
+        if (agents != null) {
+            agents.forEach(a -> sb.append(a.getAgentId()).append('\n'));
+        }
         return new ResponseEntity<>(sb.toString(), HttpStatus.OK);
+    }
+
+    @GetMapping("/agents/rx")
+    public Flux<String> getAllRx() {
+        return service.getAll().map(agent -> String.valueOf(agent.getAgentId()) + '\n');
     }
 
 }

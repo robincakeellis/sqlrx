@@ -1,37 +1,35 @@
 package com.ill.test.sqltx.repository;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import lombok.Data;
 
-@Table(name = "agtAgents")
-@Entity
+@Table("agtAgents")
 @Data
 public class AgentRow {
 
     @Id
-    @Column(name = "agentID")
+    @Column("agentID")
     private Integer agentId;
 
-    @Column(name = "divisionID")
+    @Column("divisionID")
     private int divisionId;
 
-    @Column(name = "corporationID")
+    @Column("corporationID")
     private int corporationId;
 
-    @Column(name = "locationID")
+    @Column("locationID")
     private int locationId;
 
-    @Column(name = "level")
+    @Column("level")
     private int level;
 
-    @Column(name = "agentTypeID")
+    @Column("agentTypeID")
     private int agentTypeId;
 
-    @Column(name = "isLocator")
+    @Column("isLocator")
     private boolean locator;
 
 }

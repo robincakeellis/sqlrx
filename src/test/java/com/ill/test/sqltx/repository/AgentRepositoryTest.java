@@ -14,7 +14,7 @@ class AgentRepositoryTest {
 
     @Test
     void test() {
-        final long count = repo.count();
+        final long count = repo.count().block();
         assertEquals(10871L, count);
     }
 
