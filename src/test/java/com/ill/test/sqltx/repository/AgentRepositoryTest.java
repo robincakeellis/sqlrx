@@ -13,9 +13,21 @@ class AgentRepositoryTest {
     private AgentRepository repo;
 
     @Test
-    void test() {
+    void checkCount() {
         final long count = repo.count().block();
         assertEquals(10871L, count);
+    }
+
+    @Test
+    void checkCorpFedNavy() {
+        final long count = repo.findAllByCorporationId(1000120).collectList().block().size();
+        assertEquals(144, count);
+    }
+
+    @Test
+    void checkLocation() {
+        final long count = repo.findAllByLocationId(60008368).collectList().block().size();
+        assertEquals(18, count);
     }
 
 }
