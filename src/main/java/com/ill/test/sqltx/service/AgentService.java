@@ -18,4 +18,12 @@ public class AgentService {
         return repo.findAll();
     }
 
+    public Flux<AgentRow> getForCorp(int id) {
+        return repo.findAllByCorporationId(id);
+    }
+
+    public Flux<AgentRow> getForLocation(int id) {
+        return repo.findAllByLocationId(id);
+    }
+
 }

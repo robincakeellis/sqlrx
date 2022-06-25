@@ -1,38 +1,46 @@
 package com.ill.test.sqltx.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ill.test.sqltx.repository.AgentRow;
 import com.ill.test.sqltx.service.AgentService;
 
 import reactor.core.publisher.Flux;
 
-@Controller
+@RestController
+@RequestMapping("/agents")
 public class AgentController {
 
     @Autowired
     private AgentService service;
 
-    @GetMapping("/agents")
-    public ResponseEntity<String> getAll() {
-        final List<AgentRow> agents = service.getAll().collectList().block();
-
-        final StringBuilder sb = new StringBuilder();
-        if (agents != null) {
-            agents.forEach(a -> sb.append(a.getAgentId()).append('\n'));
-        }
-        return new ResponseEntity<>(sb.toString(), HttpStatus.OK);
+    @GetMapping("")
+    @ResponseBody
+    public Flux<AgentRow> getAll() {
+        return service.getAll();
     }
 
-    @GetMapping("/agents/rx")
-    public Flux<String> getAllRx() {
+    @GetMapping("/ids")
+    @ResponseBody
+    public Flux<String> getAllIds() {
         return service.getAll().map(agent -> String.valueOf(agent.getAgentId()) + '\n');
+    }
+
+    @GetMapping("/corp/{id}")
+    @ResponseBody
+    public Flux<AgentRow> getForCorp(@PathVariable int id) {
+        return service.getForCorp(id);
+    }
+
+    @GetMapping("/location/{id}")
+    @ResponseBody
+    public Flux<AgentRow> getForLocation(@PathVariable int id) {
+        return service.getForLocation(id);
     }
 
 }
