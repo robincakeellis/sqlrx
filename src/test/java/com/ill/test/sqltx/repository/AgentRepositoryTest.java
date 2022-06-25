@@ -13,9 +13,15 @@ class AgentRepositoryTest {
     private AgentRepository repo;
 
     @Test
-    void checkCount() {
+    void checkCount_direct() {
         final long count = repo.count().block();
         assertEquals(10871L, count);
+    }
+
+    @Test
+    void checkCount_list() {
+        final int count = repo.findAll().collectList().block().size();
+        assertEquals(10871, count);
     }
 
     @Test
