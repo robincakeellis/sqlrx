@@ -21,7 +21,7 @@ class AgentControllerTest {
     private AgentService mockAgentService;
 
     @Autowired
-    private WebTestClient webClient;
+    private WebTestClient webTestClient;
 
     @Test
     void getAllAgents() {
@@ -31,7 +31,7 @@ class AgentControllerTest {
         when(mockAgentService.getAll()).thenReturn(Flux.just(a1, a2));
 
         // WHEN the endpoint is called
-        final ResponseSpec response = webClient
+        final ResponseSpec response = webTestClient
                 .get().uri("http://localhost:8080/agents")
                 .exchange();
 
@@ -49,7 +49,7 @@ class AgentControllerTest {
         when(mockAgentService.getAll()).thenReturn(Flux.just(a1, a2));
 
         // WHEN the endpoint is called
-        final ResponseSpec response = webClient
+        final ResponseSpec response = webTestClient
                 .get().uri("http://localhost:8080/agents/ids")
                 .exchange();
 
@@ -67,7 +67,7 @@ class AgentControllerTest {
         when(mockAgentService.getForCorp(101)).thenReturn(Flux.just(a1, a2));
 
         // WHEN the endpoint is called
-        final ResponseSpec response = webClient
+        final ResponseSpec response = webTestClient
                 .get().uri("http://localhost:8080/agents/corp/101")
                 .exchange();
 
@@ -83,7 +83,7 @@ class AgentControllerTest {
         when(mockAgentService.getForLocation(111)).thenReturn(Flux.just(a1, a2));
 
         // WHEN the endpoint is called
-        final ResponseSpec response = webClient
+        final ResponseSpec response = webTestClient
                 .get().uri("http://localhost:8080/agents/location/111")
                 .exchange();
 
