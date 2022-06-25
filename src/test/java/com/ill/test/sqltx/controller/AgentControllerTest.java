@@ -13,6 +13,7 @@ import com.ill.test.sqltx.repository.AgentRow;
 import com.ill.test.sqltx.service.AgentService;
 
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 @WebFluxTest(controllers = { AgentController.class })
 class AgentControllerTest {
@@ -36,7 +37,7 @@ class AgentControllerTest {
                 .exchange();
 
         // THEN we get an OK response with list content
-        checkAgentList(response);
+        checkAgentList(response, 2);
     }
 
     @Test
@@ -54,9 +55,13 @@ class AgentControllerTest {
                 .exchange();
 
         // THEN we get an OK response with list content
-        response
+        final Flux<Integer> flux = response
                 .expectStatus().isOk()
-                .expectBodyList(Integer.class);
+                .returnResult(Integer.class)
+                .getResponseBody();
+        StepVerifier.create(flux.collectList())
+                .expectNextMatches(list -> list.size() == 2)
+                .verifyComplete();
     }
 
     @Test
@@ -72,7 +77,7 @@ class AgentControllerTest {
                 .exchange();
 
         // THEN we get an OK response with list content
-        checkAgentList(response);
+        checkAgentList(response, 2);
     }
 
     @Test
@@ -88,13 +93,17 @@ class AgentControllerTest {
                 .exchange();
 
         // THEN we get an OK response with list content
-        checkAgentList(response);
+        checkAgentList(response, 2);
     }
 
-    private void checkAgentList(final ResponseSpec response) {
-        response
+    private void checkAgentList(final ResponseSpec response, int expectedCount) {
+        final Flux<AgentRow> flux = response
                 .expectStatus().isOk()
-                .expectBodyList(AgentRow.class);
+                .returnResult(AgentRow.class)
+                .getResponseBody();
+        StepVerifier.create(flux.collectList())
+                .expectNextMatches(list -> list.size() == expectedCount)
+                .verifyComplete();
     }
 
 }
