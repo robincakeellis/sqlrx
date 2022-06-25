@@ -24,8 +24,8 @@ public class AgentController {
     }
 
     @GetMapping("/ids")
-    public Flux<String> getAllIds() {
-        return service.getAll().map(agent -> String.valueOf(agent.getAgentId()) + '\n');
+    public Flux<Integer> getAllIds() {
+        return service.getAll().map(agent -> agent.getAgentId());
     }
 
     @GetMapping("/corp/{id}")
