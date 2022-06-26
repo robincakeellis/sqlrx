@@ -17,8 +17,7 @@ class AgentRepositoryTest {
         StepVerifier
                 .create(repo.count())
                 .expectNext(10871L)
-                .expectComplete()
-                .verify();
+                .verifyComplete();
     }
 
     @Test
@@ -26,8 +25,7 @@ class AgentRepositoryTest {
         StepVerifier
                 .create(repo.findAll().collectList())
                 .expectNextMatches(list -> list.size() == 10871)
-                .expectComplete()
-                .verify();
+                .verifyComplete();
     }
 
     @Test
@@ -35,8 +33,7 @@ class AgentRepositoryTest {
         StepVerifier
                 .create(repo.findAllByCorporationId(1000120).collectList())
                 .expectNextMatches(list -> list.size() == 144)
-                .expectComplete()
-                .verify();
+                .verifyComplete();
     }
 
     @Test
@@ -44,8 +41,15 @@ class AgentRepositoryTest {
         StepVerifier
                 .create(repo.findAllByLocationId(60008368).collectList())
                 .expectNextMatches(list -> list.size() == 18)
-                .expectComplete()
-                .verify();
+                .verifyComplete();
+    }
+
+    @Test
+    void checkSingleAgent() {
+        StepVerifier
+                .create(repo.findById(3015958))
+                .expectNextMatches(agent -> agent.getCorporationId() == 1000148 && agent.getLevel() == 4)
+                .verifyComplete();
     }
 
 }

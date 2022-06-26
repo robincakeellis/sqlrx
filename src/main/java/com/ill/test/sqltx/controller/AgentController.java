@@ -10,6 +10,7 @@ import com.ill.test.sqltx.repository.AgentRow;
 import com.ill.test.sqltx.service.AgentService;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/agents")
@@ -25,17 +26,22 @@ public class AgentController {
 
     @GetMapping("/ids")
     public Flux<Integer> getAllIds() {
-        return service.getAll().map(agent -> agent.getAgentId());
+        return service.getAll().map(AgentRow::getAgentId);
     }
 
-    @GetMapping("/corp/{id}")
-    public Flux<AgentRow> getForCorp(@PathVariable int id) {
-        return service.getForCorp(id);
+    @GetMapping("/corp/{corpId}")
+    public Flux<AgentRow> getForCorp(@PathVariable int corpId) {
+        return service.getForCorp(corpId);
     }
 
-    @GetMapping("/location/{id}")
-    public Flux<AgentRow> getForLocation(@PathVariable int id) {
-        return service.getForLocation(id);
+    @GetMapping("/location/{locationId}")
+    public Flux<AgentRow> getForLocation(@PathVariable int locationId) {
+        return service.getForLocation(locationId);
+    }
+
+    @GetMapping("/{agentId}")
+    public Mono<AgentRow> getAgent(@PathVariable int agentId) {
+        return service.getAgent(agentId);
     }
 
 }

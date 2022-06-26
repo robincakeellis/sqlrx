@@ -13,10 +13,14 @@ import com.ill.test.sqltx.repository.AgentRow;
 import com.ill.test.sqltx.service.AgentService;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @WebFluxTest(controllers = { AgentController.class })
 class AgentControllerTest {
+
+    private static final String AGENTS_URI = "http://localhost:8080/agents";
+    private static final int EXPECTED_AGENT_ID = 101;
 
     @MockBean
     private AgentService mockAgentService;
@@ -33,7 +37,7 @@ class AgentControllerTest {
 
         // WHEN the endpoint is called
         final ResponseSpec response = webTestClient
-                .get().uri("http://localhost:8080/agents")
+                .get().uri(AGENTS_URI)
                 .exchange();
 
         // THEN we get an OK response with list content
@@ -51,7 +55,7 @@ class AgentControllerTest {
 
         // WHEN the endpoint is called
         final ResponseSpec response = webTestClient
-                .get().uri("http://localhost:8080/agents/ids")
+                .get().uri(AGENTS_URI + "/ids")
                 .exchange();
 
         // THEN we get an OK response with list content
@@ -73,7 +77,7 @@ class AgentControllerTest {
 
         // WHEN the endpoint is called
         final ResponseSpec response = webTestClient
-                .get().uri("http://localhost:8080/agents/corp/101")
+                .get().uri(AGENTS_URI + "/corp/101")
                 .exchange();
 
         // THEN we get an OK response with list content
@@ -89,11 +93,34 @@ class AgentControllerTest {
 
         // WHEN the endpoint is called
         final ResponseSpec response = webTestClient
-                .get().uri("http://localhost:8080/agents/location/111")
+                .get().uri(AGENTS_URI + "/location/111")
                 .exchange();
 
         // THEN we get an OK response with list content
         checkAgentList(response, 2);
+    }
+
+    @Test
+    void getSingleAgent() {
+        // GIVEN we have data
+        final AgentRow agentRow = new AgentRow();
+        agentRow.setAgentId(EXPECTED_AGENT_ID);
+        when(mockAgentService.getAgent(EXPECTED_AGENT_ID)).thenReturn(Mono.just(agentRow));
+
+        // WHEN the endpoint is called
+        final ResponseSpec response = webTestClient
+                .get().uri(AGENTS_URI + "/" + EXPECTED_AGENT_ID)
+                .exchange();
+
+        // THEN we get the agent
+        final Mono<AgentRow> mono = response
+                .expectStatus().isOk()
+                .returnResult(AgentRow.class)
+                .getResponseBody()
+                .single();
+        StepVerifier.create(mono)
+                .expectNextMatches(agent -> agent.getAgentId() == EXPECTED_AGENT_ID)
+                .verifyComplete();
     }
 
     private void checkAgentList(final ResponseSpec response, int expectedCount) {
