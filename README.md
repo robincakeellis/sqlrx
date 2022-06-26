@@ -6,13 +6,22 @@ Read more about this project at [Medium.com](https://robinedwardellis.medium.com
 
 ## Test data
 
-There is a SQL script in sql folder that will create the schema. Remember to apply a user to it and update the username and password in application.properties
+There is a SQL script in sql folder that will drop the schema if it exists and create it again. Remember to apply a user to the schema and update the username and password in application.properties
 
-Test data is the agent files from the static data dump of EVE Online, May 2022. 
+Test data is the agent list from the static data dump of EVE Online, May 2022. 
 
 ## Building
 
 `mvn clean install`
+
+## Endpoints
+
+- `/agents` - get all agents
+- `/agents/101` - get an agent by ID (range is 3008416 to 3019501)
+- `/agents/ids` - get IDs for all agents (integer)
+- `/agents/corp/id` - get agents for the given corporation ID (range is 1000002 to 1000182)
+- `/agents/location/id` - get agents for the given location ID (range is 60000004 to 60015146)
+
 
 ## CCP hf. Copyright Notice
 
