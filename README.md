@@ -2,6 +2,8 @@
 
 A working Java project that uses Spring Boot and R2DBC to return data reactively from a MySQL 8 database. Configurable with application properties and with build-time tests.
 
+Read more about this project at [Medium.com](https://robinedwardellis.medium.com/reactive-mysql-with-spring-boot-1b184b9ea58a)
+
 ## Test data
 
 There is a SQL script in sql folder that will create the schema. Remember to apply a user to it and update the username and password in application.properties
