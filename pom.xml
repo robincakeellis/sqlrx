@@ -14,7 +14,7 @@
 	<artifactId>sqlrx</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sqlrx</name>
-	<description>SQL Rx Test</description>
+	<description>MySQL Rx Test</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -86,9 +86,6 @@
 								<requireMavenVersion>
 									<version>3.6.3</version>
 								</requireMavenVersion>
-								<requireJavaVersion>
-									<version>17.0.4</version>
-								</requireJavaVersion>
 							</rules>
 						</configuration>
 					</execution>
