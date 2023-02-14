@@ -22,6 +22,14 @@ Test data is the agent list from the static data dump of EVE Online, May 2022.
 - `/agents/corp/id` - get agents for the given corporation ID (range is 1000002 to 1000182)
 - `/agents/location/id` - get agents for the given location ID (range is 60000004 to 60015146)
 
+### Examples
+
+`curl -i http://localhost:8080/agents` - get all agents
+
+`curl -i http://localhost:8080/agents/3019483` - get a single agent
+
+`curl -i http://localhost:8080/agents/101` - agent not found
+
 
 ## CCP hf. Copyright Notice
 

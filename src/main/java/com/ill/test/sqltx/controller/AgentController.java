@@ -1,14 +1,14 @@
 package com.ill.test.sqltx.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ill.test.sqltx.repository.AgentRow;
 import com.ill.test.sqltx.service.AgentService;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -40,8 +40,11 @@ public class AgentController {
     }
 
     @GetMapping("/{agentId}")
-    public Mono<AgentRow> getAgent(@PathVariable int agentId) {
-        return service.getAgent(agentId);
+    public Mono<ResponseEntity<AgentRow>> getAgent(@PathVariable int agentId) {
+        return service
+                .getAgent(agentId)
+                .map(agent -> new ResponseEntity<>(agent, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 }
