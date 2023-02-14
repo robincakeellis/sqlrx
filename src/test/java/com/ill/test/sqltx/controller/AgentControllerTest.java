@@ -130,7 +130,7 @@ class AgentControllerTest {
                 .get().uri(AGENTS_URI + "/" + EXPECTED_AGENT_ID)
                 .exchange();
 
-        // THEN we get the agent
+        // THEN we get a 404
         response.expectStatus().isNotFound();
     }
 
