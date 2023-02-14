@@ -1,17 +1,14 @@
 package com.ill.test.sqltx.controller;
 
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
-
 import com.ill.test.sqltx.repository.AgentRow;
 import com.ill.test.sqltx.service.AgentService;
-
+import static org.mockito.Mockito.when;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -121,6 +118,20 @@ class AgentControllerTest {
         StepVerifier.create(mono)
                 .expectNextMatches(agent -> agent.getAgentId() == EXPECTED_AGENT_ID)
                 .verifyComplete();
+    }
+
+    @Test
+    void getUnknownAgent() {
+        // GIVEN we have no data
+        when(mockAgentService.getAgent(EXPECTED_AGENT_ID)).thenReturn(Mono.empty());
+
+        // WHEN the endpoint is called
+        final ResponseSpec response = webTestClient
+                .get().uri(AGENTS_URI + "/" + EXPECTED_AGENT_ID)
+                .exchange();
+
+        // THEN we get the agent
+        response.expectStatus().isNotFound();
     }
 
     private void checkAgentList(final ResponseSpec response, int expectedCount) {
