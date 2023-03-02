@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.8</version>
+		<version>3.0.3</version>
 		<relativePath />
 	</parent>
 
@@ -19,8 +19,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compile.source>17</maven.compile.source>
-		<maven.compile.target>17</maven.compile.target>
 		<java.version>17</java.version>
 	</properties>
 
