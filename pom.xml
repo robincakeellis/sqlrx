@@ -20,6 +20,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>17</java.version>
+		
+		<mysql-driver.version>1.0.1</mysql-driver.version>
 	</properties>
 
 	<dependencies>
@@ -34,9 +36,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>dev.miku</groupId>
+			<groupId>io.asyncer</groupId>
 			<artifactId>r2dbc-mysql</artifactId>
-			<version>0.8.2.RELEASE</version>
+			<version>${mysql-driver.version}</version>
 		</dependency>
 
 		<dependency>
