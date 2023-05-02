@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.0.6</version>
 		<relativePath />
 	</parent>
 
@@ -22,6 +22,8 @@
 		<maven.compile.source>17</maven.compile.source>
 		<maven.compile.target>17</maven.compile.target>
 		<java.version>17</java.version>
+		
+		<mysql-driver.version>1.0.1</mysql-driver.version>
 	</properties>
 
 	<dependencies>
@@ -36,9 +38,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>dev.miku</groupId>
+			<groupId>io.asyncer</groupId>
 			<artifactId>r2dbc-mysql</artifactId>
-			<version>0.8.2.RELEASE</version>
+			<version>${mysql-driver.version}</version>
 		</dependency>
 
 		<dependency>
